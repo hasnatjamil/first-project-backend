@@ -9,7 +9,7 @@ app.use(cors())
 app.get('/', (req: Request, res: Response) => {
   var a = 5
   res.send('Hello World!')
-  res.send(a)
+  //res.send(a)
 })
 
 export default app
