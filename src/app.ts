@@ -6,10 +6,12 @@ const app: Application = express()
 app.use(express.json())
 app.use(cors())
 
-app.get('/', (req: Request, res: Response) => {
+const getController = (req: Request, res: Response) => {
   var a = 5
-  res.send('Hello World!')
-  //res.send(a)
-})
+  //res.send('Hello World!')
+  res.send(a)
+}
+
+app.get('/', getController)
 
 export default app

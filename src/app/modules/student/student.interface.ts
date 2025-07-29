@@ -24,6 +24,7 @@ export type Student = {
   dateOfBirth: string
   email: string
   contactNo: string
+  bloodGroups: string
   emergencyContactNo: string
   presentAddress: string
   parmanentAddress: string
