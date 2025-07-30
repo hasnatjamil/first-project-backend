@@ -27,7 +27,7 @@ export type Student = {
   bloodGroups: string
   emergencyContactNo: string
   presentAddress: string
-  parmanentAddress: string
+  permanentAddress: string
   guardian: Guardian
   localGuardian: LocalGuardian
   profileImg?: string
