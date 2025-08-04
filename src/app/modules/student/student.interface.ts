@@ -14,7 +14,7 @@ export type LocalGuardian = {
 }
 export type UserName = {
   firstName: string
-  middleName: string
+  middleName?: string
   lastName: string
 }
 export type Student = {
@@ -24,7 +24,7 @@ export type Student = {
   dateOfBirth: string
   email: string
   contactNo: string
-  bloodGroups: string
+  bloodGroup: string
   emergencyContactNo: string
   presentAddress: string
   permanentAddress: string
