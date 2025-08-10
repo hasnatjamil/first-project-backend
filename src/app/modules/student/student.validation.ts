@@ -1,4 +1,4 @@
-import * as z from "zod";
+import * as z from 'zod'
 
 // Sub-schema: UserName
 const userNameValidationSchema = z.object({
@@ -37,14 +37,14 @@ const guardianValidationSchema = z.object({
 const localGuardianValidationSchema = z.object({
   name: z.string(),
   occupation: z.string(),
-  contactNo: z.string(),   
+  contactNo: z.string(),
   address: z.string(),
 })
 
 // Main Student Schema
 export const studentValidationSchema = z.object({
   id: z.string().min(1),
-  password:z.string().min(6).max(20),
+  password: z.string().min(6).max(20),
 
   name: userNameValidationSchema,
 
@@ -54,9 +54,7 @@ export const studentValidationSchema = z.object({
     .string()
     .regex(/^\d{2}-\d{2}-\d{4}$/, 'Date of birth must be in DD-MM-YYYY format'),
 
-  email: z
-    .string()
-    .email('Invalid email format'),
+  email: z.string().email('Invalid email format'),
 
   contactNo: z
     .string()
@@ -81,5 +79,6 @@ export const studentValidationSchema = z.object({
     .optional(),
 
   isActive: z.enum(['active', 'blocked']),
+  isDeleted: z.boolean(),
 })
-export default studentValidationSchema;
+export default studentValidationSchema

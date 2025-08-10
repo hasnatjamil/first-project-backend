@@ -148,6 +148,10 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     default: 'active',
     required: true,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 studentSchema.statics.isUserExist = async function (id: string) {
@@ -169,12 +173,16 @@ studentSchema.pre('save', async function (next) {
     user.password,
     Number(config.bcrypt_salt_rounds),
   )
-
   next()
 })
 
-studentSchema.post('save', function () {
-  console.log(this, 'This is post hook;it saved data')
+studentSchema.post('save', function (doc, next) {
+  doc.password = ''
+  next()
+})
+
+studentSchema.pre('find', function (next) {
+  console.log(this)
 })
 
 export const Student = model<TStudent, StudentModel>('Student', studentSchema)

@@ -19,7 +19,17 @@ const createStudentIntoDB = async (studentData: TStudent) => {
   // const result = await student.save()
   // return result
 }
+const getAllStudentFromDB = async (studentData: TStudent) => {
+  const result = await Student.find()
+  return result
+}
+const deleteStudentFromDB = async (id: string) => {
+  const result = await Student.updateOne({ id }, { isDeleted: true })
+  return result
+}
 
 export const StudentServices = {
   createStudentIntoDB,
+  getAllStudentFromDB,
+  deleteStudentFromDB
 }
