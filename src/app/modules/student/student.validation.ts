@@ -44,6 +44,7 @@ const localGuardianValidationSchema = z.object({
 // Main Student Schema
 export const studentValidationSchema = z.object({
   id: z.string().min(1),
+  password:z.string().min(6).max(20),
 
   name: userNameValidationSchema,
 

@@ -21,6 +21,7 @@ export type TUserName = {
 }
 export type TStudent = {
   id: string
+  password: string
   name: TUserName
   gender: 'Male' | 'Female'
   dateOfBirth: string
@@ -36,12 +37,16 @@ export type TStudent = {
   isActive: 'active' | 'blocked'
 }
 
-export type StudentMethods = {
+// export type StudentMethods = {
+//   isUserExist(id: string): Promise<TStudent | null>
+// }
+
+// export type StudentModel = Model<
+//   TStudent,
+//   Record<string, never>,
+//   StudentMethods
+// >
+
+export interface StudentModel extends Model<TStudent> {
   isUserExist(id: string): Promise<TStudent | null>
 }
-
-export type StudentModel = Model<
-  TStudent,
-  Record<string, never>,
-  StudentMethods
->

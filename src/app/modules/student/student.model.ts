@@ -7,6 +7,8 @@ import {
   StudentModel,
 } from './student.interface'
 import validator from 'validator'
+import bcrypt from 'bcrypt'
+import config from '../../config'
 
 const userNameSchema = new Schema<TUserName>({
   firstName: {
@@ -74,9 +76,17 @@ const localGuardianSchema = new Schema<TLocalGuardian>({
   address: { type: String, required: true, trim: true },
 })
 
-const studentSchema = new Schema<TStudent>({
+const studentSchema = new Schema<TStudent, StudentModel>({
   id: {
     type: String,
+    required: [true, 'Id is required'],
+    unique: true,
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: [true, 'Password is required'],
+    maxlength: [15, 'Maximum length of password is 15 character'],
     trim: true,
   },
   name: { type: userNameSchema, required: true },
@@ -140,9 +150,31 @@ const studentSchema = new Schema<TStudent>({
   },
 })
 
-studentSchema.methods.isUserExist = async function (id: string) {
+studentSchema.statics.isUserExist = async function (id: string) {
   const existingUser = await Student.findOne({ id })
   return existingUser
 }
+
+// creating the custom instance methods
+// studentSchema.methods.isUserExist = async function (id: string) {
+//   const existingUser = await Student.findOne({ id })
+//   return existingUser
+// }
+
+studentSchema.pre('save', async function (next) {
+  //console.log(this, 'This is pre hook;it will save data')
+
+  const user = this
+  user.password = await bcrypt.hash(
+    user.password,
+    Number(config.bcrypt_salt_rounds),
+  )
+
+  next()
+})
+
+studentSchema.post('save', function () {
+  console.log(this, 'This is post hook;it saved data')
+})
 
 export const Student = model<TStudent, StudentModel>('Student', studentSchema)
