@@ -6,7 +6,7 @@ const createStudent = async (req: Request, res: Response) => {
   try {
     const { student: studentData } = req.body
 
-    console.log(studentData)
+    //console.log(studentData)
     const zodParseData = studentValidationSchema.parse(studentData)
 
     const result = await StudentServices.createStudentIntoDB(zodParseData)
@@ -24,10 +24,11 @@ const createStudent = async (req: Request, res: Response) => {
     })
   }
 }
+
 const getAllStudents = async (req: Request, res: Response) => {
   try {
-    const { student: studentData } = req.body
-    const result = await StudentServices.getAllStudentFromDB(studentData)
+    
+    const result = await StudentServices.getAllStudentsFromDB()
 
     res.status(200).json({
       success: true,
@@ -43,7 +44,47 @@ const getAllStudents = async (req: Request, res: Response) => {
   }
 }
 
+const getSingleStudent = async (req: Request, res: Response) => {
+  try {
+    const { studentId } = req.params
+    const result = await StudentServices.getSinglStudentFromDB(studentId)
+
+    res.status(200).json({
+      success: true,
+      message: 'Single student is retived Successfully',
+      data: result,
+    })
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Something Wrong',
+      error: error,
+    })
+  }
+}
+
+const deleteStudent = async (req: Request, res: Response) => {
+  try {
+    const { studentId } = req.params
+    const result = await StudentServices.deleteStudentFromDB(studentId)
+
+    res.status(200).json({
+      success: true,
+      message: 'Successfully deleted the student',
+      data: result,
+    })
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message || 'Something Wrong',
+      error: error,
+    })
+  }
+}
+
 export const StudentControllers = {
   createStudent,
   getAllStudents,
+  deleteStudent,
+  getSingleStudent,
 }
