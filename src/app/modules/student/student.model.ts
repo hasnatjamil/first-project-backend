@@ -10,38 +10,40 @@ import validator from 'validator'
 import bcrypt from 'bcrypt'
 import config from '../../config'
 
-const userNameSchema = new Schema<TUserName>({
-  firstName: {
-    type: String,
-    required: [true, 'First name must be given.'],
-    maxlength: [20, 'First name must be within 20 characters.'],
-    minlength: [2, 'First name must be at least 2 characters.'],
-    trim: true,
-    set: (value: string) =>
-      value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
-  },
-  middleName: {
-    type: String,
-    maxlength: 20,
-    trim: true,
-  },
-  lastName: {
-    type: String,
-    required: [true, 'Last name must be given.'],
-    maxlength: [20, 'Last name must be within 20 characters.'],
-    minlength: [2, 'Last name must be at least 2 characters.'],
-    trim: true,
-    // validate: {
-    //   validator: (value: string) => validator.isAlpha(value),
-    //   message:  '{VALUE} must contain only letters.',
-    // },
-
-    validate: {
-      validator: (value: string) => validator.isAlpha(value),
-      message: props => `${props.value} must contain only letters.`,
+const userNameSchema = new Schema<TUserName>(
+  {
+    firstName: {
+      type: String,
+      required: [true, 'First name must be given.'],
+      maxlength: [20, 'First name must be within 20 characters.'],
+      minlength: [2, 'First name must be at least 2 characters.'],
+      trim: true,
+      set: (value: string) =>
+        value.charAt(0).toUpperCase() + value.slice(1).toLowerCase(),
     },
-  },
-})
+    middleName: {
+      type: String,
+      maxlength: 20,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      required: [true, 'Last name must be given.'],
+      maxlength: [20, 'Last name must be within 20 characters.'],
+      minlength: [2, 'Last name must be at least 2 characters.'],
+      trim: true,
+      // validate: {
+      //   validator: (value: string) => validator.isAlpha(value),
+      //   message:  '{VALUE} must contain only letters.',
+      // },
+
+      validate: {
+        validator: (value: string) => validator.isAlpha(value),
+        message: props => `${props.value} must contain only letters.`,
+      },
+    },
+  }
+)
 const guardianSchema = new Schema<TGuardian>({
   fatherName: {
     type: String,
@@ -152,7 +154,10 @@ const studentSchema = new Schema<TStudent, StudentModel>({
     type: Boolean,
     default: false,
   },
-})
+},
+  {
+    toJSON: { virtuals: true },
+  },)
 
 studentSchema.statics.isUserExist = async function (id: string) {
   const existingUser = await Student.findOne({ id })
@@ -164,6 +169,13 @@ studentSchema.statics.isUserExist = async function (id: string) {
 //   const existingUser = await Student.findOne({ id })
 //   return existingUser
 // }
+
+
+//virtuals
+studentSchema.virtual('fullName').get(function(){
+  return `${this.name.firstName} ${this.name.middleName} ${this.name.lastName}`
+})
+
 
 studentSchema.pre('save', async function (next) {
   //console.log(this, 'This is pre hook;it will save data')
