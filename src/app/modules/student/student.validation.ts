@@ -1,5 +1,6 @@
 import * as z from 'zod'
 
+const phoneRegex = /^(?:\+880|880|0)1[3-9]\d{8}$/
 // Sub-schema: UserName
 const userNameValidationSchema = z.object({
   firstName: z
@@ -25,12 +26,12 @@ const guardianValidationSchema = z.object({
   fatherOccupation: z.string(),
   fatherContactNo: z
     .string()
-    .regex(/^01[3-9]\d{8}$/, 'Invalid Bangladeshi phone number'),
+    .regex(phoneRegex, 'Invalid Bangladeshi phone number'),
   motherName: z.string(),
   motherOccupation: z.string(),
   motherContactNo: z
     .string()
-    .regex(/^01[3-9]\d{8}$/, 'Invalid Bangladeshi phone number'),
+    .regex(phoneRegex, 'Invalid Bangladeshi phone number'),
 })
 
 // Sub-schema: Local Guardian
@@ -42,43 +43,51 @@ const localGuardianValidationSchema = z.object({
 })
 
 // Main Student Schema
-export const studentValidationSchema = z.object({
-  id: z.string().min(1),
-  password: z.string().min(6).max(20),
+export const createStudentValidationSchema = z.object({
+  body: z.object({
+    password: z.string().min(6).max(20),
 
-  name: userNameValidationSchema,
+    student: z.object({
+      name: userNameValidationSchema,
 
-  gender: z.enum(['Male', 'Female']),
+      gender: z.enum(['Male', 'Female']),
 
-  dateOfBirth: z
-    .string()
-    .regex(/^\d{2}-\d{2}-\d{4}$/, 'Date of birth must be in DD-MM-YYYY format'),
+      dateOfBirth: z
+        .string()
+        .regex(
+          /^\d{2}-\d{2}-\d{4}$/,
+          'Date of birth must be in DD-MM-YYYY format',
+        ),
 
-  email: z.string().email('Invalid email format'),
+      email: z.string().email('Invalid email format'),
 
-  contactNo: z
-    .string()
-    .regex(/^01[3-9]\d{8}$/, 'Invalid Bangladeshi phone number'),
+      contactNo: z
+        .string()
+        .regex(phoneRegex, 'Invalid Bangladeshi phone number'),
 
-  emergencyContactNo: z
-    .string()
-    .regex(/^01[3-9]\d{8}$/, 'Invalid Bangladeshi phone number'),
+      emergencyContactNo: z
+        .string()
+        .regex(phoneRegex, 'Invalid Bangladeshi phone number'),
 
-  bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
+      bloodGroup: z.enum(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']),
 
-  presentAddress: z.string(),
-  permanentAddress: z.string(),
+      presentAddress: z.string(),
+      permanentAddress: z.string(),
 
-  guardian: guardianValidationSchema,
-  localGuardian: localGuardianValidationSchema,
+      guardian: guardianValidationSchema,
+      localGuardian: localGuardianValidationSchema,
 
-  profileImg: z
-    .string()
-    .url('Invalid image URL')
-    .regex(/\.(jpg|jpeg|png|webp)$/i, 'Profile image must be a valid image URL')
-    .optional(),
-
-  isActive: z.enum(['active', 'blocked']),
-  isDeleted: z.boolean(),
+      profileImg: z
+        .string()
+        .url('Invalid image URL')
+        .regex(
+          /\.(jpg|jpeg|png|webp)$/i,
+          'Profile image must be a valid image URL',
+        )
+        .optional(),
+    }),
+  }),
 })
-export default studentValidationSchema
+export const studentValidations = {
+  studentValidationSchema: createStudentValidationSchema,
+}
