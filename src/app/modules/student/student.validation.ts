@@ -52,12 +52,7 @@ export const createStudentValidationSchema = z.object({
 
       gender: z.enum(['Male', 'Female']),
 
-      dateOfBirth: z
-        .string()
-        .regex(
-          /^\d{2}-\d{2}-\d{4}$/,
-          'Date of birth must be in DD-MM-YYYY format',
-        ),
+      dateOfBirth: z.date().optional(),
 
       email: z.string().email('Invalid email format'),
 

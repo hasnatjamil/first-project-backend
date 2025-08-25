@@ -99,12 +99,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: true,
     },
     dateOfBirth: {
-      type: String,
-      required: true,
-      match: [
-        /^\d{2}-\d{2}-\d{4}$/,
-        'Date of birth must be in DD-MM-YYYY format',
-      ],
+      type: Date,
     },
     email: {
       type: String,
@@ -151,8 +146,6 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     toJSON: { virtuals: true },
   },
 )
-
-
 
 // creating the custom instance methods
 // studentSchema.methods.isUserExist = async function (id: string) {
