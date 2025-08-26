@@ -1,49 +1,17 @@
 import { model, Schema } from 'mongoose'
 
-import bcrypt from 'bcrypt'
-import config from '../../config'
+import { TAcademicSemester } from './academicSemester.interface'
 import {
-  TAcademicSemester,
-  TAcademicSemesterCode,
-  TAcademicSemesterName,
-  TMonths,
-} from './academicSemester.interface'
-
-// সব মাস
-export const Months: TMonths[] = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-]
-
-// সেমেস্টার নাম
-export const AcademicSemesterName: TAcademicSemesterName['name'][] = [
-  'Autumn',
-  'Summer',
-  'Fall',
-]
-
-// সেমেস্টার কোড
-export const AcademicSemesterCode: TAcademicSemesterCode['code'][] = [
-  '01',
-  '02',
-  '03',
-]
+  AcademicSemesterCode,
+  AcademicSemesterName,
+  Months,
+} from './academicSemester.constent'
 
 const academicSemesterSchema = new Schema<TAcademicSemester>(
- {
+  {
     name: {
       type: String,
-      enum:AcademicSemesterName,
+      enum: AcademicSemesterName,
       required: true,
     },
     code: {
@@ -52,20 +20,19 @@ const academicSemesterSchema = new Schema<TAcademicSemester>(
       required: true,
     },
     year: {
-      type: Date, 
+      type: Date,
       required: true,
     },
-    startMonth:{
-
+    startMonth: {
+      type: String,
+      required: true,
+      enum: Months,
     },
-    endMonth:{
-
-    },
-
+    endMonth: { type: String, required: true, enum: Months },
+  },
   {
     timestamps: true,
   },
-}
 )
 
 export const AcademicSemester = model<TAcademicSemester>(
