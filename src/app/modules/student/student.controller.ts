@@ -16,7 +16,7 @@ const getAllStudents = catchAsync(async (req, res, next) => {
   })
 })
 
-const getSingleStudent: RequestHandler = catchAsync(async (req, res, next) => {
+const getSingleStudent = catchAsync(async (req, res, next) => {
   const { studentId } = req.params
   const result = await StudentServices.getSinglStudentFromDB(studentId)
 

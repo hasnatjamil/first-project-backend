@@ -1,4 +1,4 @@
-import { Schema, model } from 'mongoose'
+import { Schema, SchemaType, model } from 'mongoose'
 import {
   TUserName,
   TStudent,
@@ -137,6 +137,8 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       trim: true,
       match: [/^https?:\/\/.+\.(jpg|jpeg|png|webp)$/, 'Invalid image URL'],
     },
+    admissionSemester: { type: Schema.Types.ObjectId, ref: 'AcademicSemester' },
+
     isDeleted: {
       type: Boolean,
       default: false,
