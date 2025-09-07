@@ -99,7 +99,7 @@ const studentSchema = new Schema<TStudent, StudentModel>(
       required: true,
     },
     dateOfBirth: {
-      type: Date,
+      type: String,
     },
     email: {
       type: String,
@@ -132,13 +132,12 @@ const studentSchema = new Schema<TStudent, StudentModel>(
     permanentAddress: { type: String, required: true, trim: true },
     guardian: { type: guardianSchema, required: true },
     localGuardian: { type: localGuardianSchema, required: true },
+    admissionSemester: { type: Schema.Types.ObjectId, ref: 'AcademicSemester' },
     profileImg: {
       type: String,
       trim: true,
       match: [/^https?:\/\/.+\.(jpg|jpeg|png|webp)$/, 'Invalid image URL'],
     },
-    admissionSemester: { type: Schema.Types.ObjectId, ref: 'AcademicSemester' },
-
     isDeleted: {
       type: Boolean,
       default: false,

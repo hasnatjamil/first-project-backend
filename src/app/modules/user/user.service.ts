@@ -1,10 +1,13 @@
 import config from '../../config'
+import { TAcademicSemester } from '../academicSemester/academicSemester.interface'
+import { AcademicSemester } from '../academicSemester/academicSemester.model'
 import { TStudent } from '../student/student.interface'
 import { Student } from '../student/student.model'
 import { TUser } from './user.interface'
 import { User } from './user.model'
+import { generateStudentId } from './user.utils'
 
-const createStudentIntoDB = async (password: string, studentData: TStudent) => {
+const createStudentIntoDB = async (password: string, payLoad: TStudent) => {
   // const result = await Student.create(student) create is a built in static method
 
   //   if (await Student.isUserExist(studentData.id)) {
@@ -19,25 +22,24 @@ const createStudentIntoDB = async (password: string, studentData: TStudent) => {
   userData.password = password || (config.default_password as string)
 
   userData.role = 'student'
-  userData.id = '2030100001'
+
+  //find academic semester info
+  const admissionSemester = await AcademicSemester.findById(payLoad.admissionSemester)
+
+  if (!admissionSemester) {
+    throw new Error('Something went wrong!')
+  }
+  userData.id = await generateStudentId(admissionSemester)
 
   const newUser = await User.create(userData) //built in static method
 
   if (Object.keys(newUser).length) {
-    studentData.id = newUser.id
-    studentData.user = newUser._id
+    payLoad.id = newUser.id
+    payLoad.user = newUser._id
 
-    const newStudent = await Student.create(studentData)
+    const newStudent = await Student.create(payLoad)
     return newStudent
   }
-
-  // const student = new Student(studentData) //create an instance
-
-  // if (await student.isUserExist(studentData.id)) {
-  //   throw new Error('User Already Exist!')
-  // }
-  // const result = await student.save()
-  // return result
 }
 
 export const UserServices = {
