@@ -1,15 +1,10 @@
-import { TAcademicFaculty } from './academicFaculty.interface'
-import { AcademicFaculty } from './academicFaculty.model'
+import { TAcademicDepartment } from './academicDepartment.interface'
+import { AcademicFaculty } from './academicDepartment.model'
 
-
-const createAcademicFacultyIntoDB = async (
-  payLoad: TAcademicFaculty,
-) => {
+const createAcademicFacultyIntoDB = async (payLoad: TAcademicDepartment) => {
   const result = await AcademicFaculty.create(payLoad)
   return result
 }
-
-
 
 const getAllAcademicFacultiesFromDB = async () => {
   const result = await AcademicFaculty.find()
@@ -24,7 +19,7 @@ const getSinglAcademicFacultyFromDB = async (id: string) => {
 
 const updateAcademicFacultyIntoDB = async (
   id: string,
-  payLoad: Partial<TAcademicFaculty>,
+  payLoad: Partial<TAcademicDepartment>,
 ) => {
   const result = await AcademicFaculty.findOneAndUpdate({ _id: id }, payLoad, {
     new: true,

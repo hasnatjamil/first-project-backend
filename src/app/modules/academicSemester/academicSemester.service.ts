@@ -2,13 +2,11 @@ import { academicSemesterNameCodeMapper } from './academicSemester.constent'
 import { TAcademicSemesterCode } from './academicSemester.interface'
 import { AcademicSemester } from './academicSemester.model'
 
-const createAcademicSemesterIntoDB = async (
-  playLoad: TAcademicSemesterCode,
-) => {
-  if (academicSemesterNameCodeMapper[playLoad.name] !== playLoad.code) {
+const createAcademicSemesterIntoDB = async (payLoad: TAcademicSemesterCode) => {
+  if (academicSemesterNameCodeMapper[payLoad.name] !== payLoad.code) {
     throw new Error('Invalid Semester Code')
   }
-  const result = await AcademicSemester.create(playLoad)
+  const result = await AcademicSemester.create(payLoad)
   return result
 }
 
