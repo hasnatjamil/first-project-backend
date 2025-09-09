@@ -1,6 +1,8 @@
 import express from 'express'
 
 import validateRequest from '../../middlewares/validateRequest'
+import { AcademicFacultyValidation } from './academicFaculty.validation'
+import { AcademicFacultyControllers } from './academicFaculty.controller'
 
 const router = express.Router()
 
@@ -12,28 +14,28 @@ const router = express.Router()
 // router.delete('/delete-student/:studentId', StudentControllers.deleteStudent)
 
 router.post(
-  '/create-academic-semester',
+  '/create-academic-faculty',
   validateRequest(
-    AcademicSemesterValidations.createAcademicSemesterValidationSchema,
+    AcademicFacultyValidation.createAcademicFacultyValidationSchema,
   ),
-  AcademicSemesterControllers.createAcademicSemester,
+  AcademicFacultyControllers.createAcademicFaculty,
 )
 
 router.get(
-  '/get-all-semesters',
-  AcademicSemesterControllers.getAllAcademicSemesters,
+  '/get-all-faculties',
+  AcademicFacultyControllers.getAllAcademicFaculties,
 )
 
 router.get(
-  '/get-single-semester/:semesterId',
-  AcademicSemesterControllers.getSingleAcademicSemester,
+  '/get-single-faculty/:semesterId',
+  AcademicFacultyControllers.getSingleAcademicFaculty,
 )
 router.patch(
-  '/get-single-semester/:semesterId',
+  '/update-faculty/:semesterId',
   validateRequest(
-    AcademicSemesterValidations.updateAcademicSemesterValidationSchema,
+    AcademicFacultyValidation.updatAcademicFacultyValidationSchema,
   ),
-  AcademicSemesterControllers.updateAcademicSemester,
+  AcademicFacultyControllers.updateAcademicFaculty,
 )
 
-export const AcademicSemesterRoutes = router
+export const AcademicFacultyRoutes = router

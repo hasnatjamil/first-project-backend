@@ -2,7 +2,7 @@ import { TAcademicFaculty } from './academicFaculty.interface'
 import { AcademicFaculty } from './academicFaculty.model'
 
 
-const createAcademicSemesterIntoDB = async (
+const createAcademicFacultyIntoDB = async (
   playLoad: TAcademicFaculty,
 ) => {
   const result = await AcademicFaculty.create(playLoad)
@@ -32,7 +32,7 @@ const updateAcademicFacultyIntoDB = async (
 }
 
 export const AcademicFacultyServices = {
-  createAcademicSemesterIntoDB,
+  createAcademicFacultyIntoDB,
   getAllAcademicFacultiesFromDB,
   getSinglAcademicFacultyFromDB,
   updateAcademicFacultyIntoDB,

@@ -6,14 +6,14 @@ import { AcademicFacultyServices } from './academicFaculty.service'
 const createAcademicFaculty = catchAsync(async (req, res, next) => {
   //const { password, student: studentData } = req.body
 
-  const result = await AcademicFacultyServices.createAcademicSemesterIntoDB(
+  const result = await AcademicFacultyServices.createAcademicFacultyIntoDB(
     req.body,
   )
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Semester is created Successfully',
+    message: 'Academic Faculty is created Successfully',
     data: result,
   })
 })
@@ -26,7 +26,7 @@ const getAllAcademicFaculties = catchAsync(async (req, res, next) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'All Semester Retrivd Successfully',
+    message: 'All Academic Faculties Retrivd Successfully',
     data: result,
   })
 })
@@ -39,7 +39,7 @@ const getSingleAcademicFaculty = catchAsync(async (req, res, next) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'A Student retived Successfully',
+    message: 'An Academic Faculty retived Successfully',
     data: result,
   })
 })
@@ -53,12 +53,12 @@ const updateAcademicFaculty = catchAsync(async (req, res, next) => {
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'A Student retived Successfully',
+    message: 'An Academic Faculty updated Successfully',
     data: result,
   })
 })
 
-export const AcademicSemesterControllers = {
+export const AcademicFacultyControllers = {
   createAcademicFaculty,
   getAllAcademicFaculties,
   getSingleAcademicFaculty,
