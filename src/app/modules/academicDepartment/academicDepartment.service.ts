@@ -1,36 +1,36 @@
 import { TAcademicDepartment } from './academicDepartment.interface'
-import { AcademicFaculty } from './academicDepartment.model'
+import { AcademicDepartment } from './academicDepartment.model'
 
-const createAcademicFacultyIntoDB = async (payLoad: TAcademicDepartment) => {
-  const result = await AcademicFaculty.create(payLoad)
+const createAcademicDepartmentIntoDB = async (payLoad: TAcademicDepartment) => {
+  const result = await AcademicDepartment.create(payLoad)
   return result
 }
 
-const getAllAcademicFacultiesFromDB = async () => {
-  const result = await AcademicFaculty.find()
+const getAllAcademicDepartmentsFromDB = async () => {
+  const result = await AcademicDepartment.find()
   return result
 }
 
-const getSinglAcademicFacultyFromDB = async (id: string) => {
-  const result = await AcademicFaculty.findOne({ id })
+const getSinglAcademicDepartmentFromDB = async (id: string) => {
+  const result = await AcademicDepartment.findOne({ id })
   //const result = await AcademicSemester.aggregate([{ $match: { id: id } }])
   return result
 }
 
-const updateAcademicFacultyIntoDB = async (
+const updateAcademicDepartmentIntoDB = async (
   id: string,
   payLoad: Partial<TAcademicDepartment>,
 ) => {
-  const result = await AcademicFaculty.findOneAndUpdate({ _id: id }, payLoad, {
+  const result = await AcademicDepartment.findOneAndUpdate({ _id: id }, payLoad, {
     new: true,
   })
 
   return result
 }
 
-export const AcademicFacultyServices = {
-  createAcademicFacultyIntoDB,
-  getAllAcademicFacultiesFromDB,
-  getSinglAcademicFacultyFromDB,
-  updateAcademicFacultyIntoDB,
+export const AcademicDepartmentServices = {
+  createAcademicDepartmentIntoDB,
+  getAllAcademicDepartmentsFromDB,
+  getSinglAcademicDepartmentFromDB,
+  updateAcademicDepartmentIntoDB,
 }
