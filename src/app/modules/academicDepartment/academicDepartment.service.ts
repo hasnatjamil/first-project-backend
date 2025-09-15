@@ -7,21 +7,21 @@ const createAcademicDepartmentIntoDB = async (payLoad: TAcademicDepartment) => {
 }
 
 const getAllAcademicDepartmentsFromDB = async () => {
-  const result = await AcademicDepartment.find()
+  const result = await AcademicDepartment.find().populate('academicFaculty')
   return result
 }
 
-const getSinglAcademicDepartmentFromDB = async (id: string) => {
-  const result = await AcademicDepartment.findOne({ id })
+const getSinglAcademicDepartmentFromDB = async (_id: string) => {
+  const result = await AcademicDepartment.findOne({ _id }).populate('academicFaculty')
   //const result = await AcademicSemester.aggregate([{ $match: { id: id } }])
   return result
 }
 
 const updateAcademicDepartmentIntoDB = async (
-  id: string,
+  _id: string,
   payLoad: Partial<TAcademicDepartment>,
 ) => {
-  const result = await AcademicDepartment.findOneAndUpdate({ _id: id }, payLoad, {
+  const result = await AcademicDepartment.findOneAndUpdate({ id: _id }, payLoad, {
     new: true,
   })
 

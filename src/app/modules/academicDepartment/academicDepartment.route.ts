@@ -28,12 +28,12 @@ router.get(
 )
 
 router.get(
-  '/get-single-department/:semesterId',
+  '/get-single-department/:departmentId',
   AcademicDepartmentControllers.getSingleAcademicDepartment,
 )
 
 router.patch(
-  '/update-department/:semesterId',
+  '/update-department/:departmentId',
   validateRequest(
     AcademicDepartmentValidation.updatAcademicDepartmentValidationSchema,
   ),

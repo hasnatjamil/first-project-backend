@@ -24,12 +24,12 @@ const updatAcademicDepartmentValidationSchema = z.object({
         required_error: 'Academic Department name is required',
       })
       .min(1, { message: 'Academic Department must be a non-empty string' }),
-    academicFaculty: z
-      .string({
-        invalid_type_error: 'Academic faculty must be string',
-        required_error: 'Academic faculty name is required',
-      })
-      .min(1, { message: 'Academic faculty must be a non-empty string' }),
+    // academicFaculty: z
+    //   .string({
+    //     invalid_type_error: 'Academic faculty must be string',
+    //     required_error: 'Academic faculty name is required',
+    //   })
+    //   .min(1, { message: 'Academic faculty must be a non-empty string' }),
   }),
 })
 
