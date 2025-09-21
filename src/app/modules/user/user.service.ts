@@ -1,4 +1,5 @@
 import config from '../../config'
+import AppError from '../../errors/AppError'
 import { TAcademicSemester } from '../academicSemester/academicSemester.interface'
 import { AcademicSemester } from '../academicSemester/academicSemester.model'
 import { TStudent } from '../student/student.interface'
@@ -27,7 +28,7 @@ const createStudentIntoDB = async (password: string, payLoad: TStudent) => {
   const admissionSemester = await AcademicSemester.findById(payLoad.admissionSemester)
 
   if (!admissionSemester) {
-    throw new Error('Something went wrong!')
+    throw new AppError(400,'Something went wrong!')
   }
   userData.id = await generateStudentId(admissionSemester)
 

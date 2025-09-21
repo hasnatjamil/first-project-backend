@@ -21,7 +21,7 @@ export type TUserName = {
 }
 export type TStudent = {
   id: string
-  user:Types.ObjectId
+  user: Types.ObjectId
   password: string
   name: TUserName
   gender: 'Male' | 'Female'
@@ -34,11 +34,11 @@ export type TStudent = {
   permanentAddress: string
   guardian: TGuardian
   localGuardian: TLocalGuardian
-  admissionSemester:Types.ObjectId
   profileImg?: string
-  
   isDeleted: boolean
-  
+
+  admissionSemester: Types.ObjectId
+  academicDepartment: Types.ObjectId
 }
 
 // export type StudentMethods = {
